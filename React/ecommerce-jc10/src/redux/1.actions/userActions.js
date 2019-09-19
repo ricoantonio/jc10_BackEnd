@@ -21,7 +21,7 @@ export const onLogin = (userObject) => {
             type : 'IS_LOADING'
         })
 
-        Axios.get(urlApi + 'users', {
+        Axios.get('localhost:9000/auth/login', {
             params : {
                 // properti di kiri adalah column dari Database
                 username : userObject.asalNama,
