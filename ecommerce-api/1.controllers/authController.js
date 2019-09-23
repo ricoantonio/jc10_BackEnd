@@ -7,5 +7,12 @@ module.exports={
             if (err) throw err
             res.send(result)
         })
+    },
+    checkUser:(req,res)=>{
+        db.query(`select * from users where username = '${req.query.username}'`, 
+            (err,result)=>{
+            if (err) throw err
+            res.send(result)
+        })
     }
 }

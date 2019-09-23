@@ -8,7 +8,7 @@ var bodyParser=require('body-parser')
 const port =9000
 const {authRouter}=require('./2.routers')
 
-app.use(bodyParser())
+app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/',(req,res)=>{
