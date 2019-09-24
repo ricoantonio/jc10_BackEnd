@@ -2,11 +2,11 @@ var express=require('express')
 var router=express.Router()
 const {
     login,
-    checkUser
+    register
 }=require('../1.controllers/authController')
 // const {authController}=require('../1.controllers')
 
 router.get('/login', login)
-router.get('/checkuser', checkUser)
+router.post('/register', register)
 
 module.exports=router
