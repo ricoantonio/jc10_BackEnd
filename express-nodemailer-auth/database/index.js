@@ -54,7 +54,7 @@ app.get('/sendverifyemail',(req,res)=>{
         from: 'Nodemailerku',
         to,
         subject:'Verify your account!',
-        html:`<p> Klik <a href='localhost:1337/verify?username=${username}'>link</a>ini untuk verifikasi email anda</p>`
+        html:`<p> Klik <a href='http://localhost:1337/verify?username=${username}'>link</a> ini untuk verifikasi email anda</p>`
     }
     if(to){
         transporter.sendMail(mailOption,(err,info)=>{
