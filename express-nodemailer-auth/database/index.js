@@ -69,7 +69,7 @@ app.get('/sendverifyemail',(req,res)=>{
 app.get('/verify',(req,res)=>{
     let username=req.query.username
     let sql= `update users set verified = 1 where username='${username}'`
-
+    
     db.query(sql,(err,result)=>{
         if (err) throw err
         res.send('Akun anda berhasil diverifikasi')

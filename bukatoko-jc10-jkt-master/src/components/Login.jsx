@@ -3,7 +3,7 @@ import Axios from 'axios'
 import { Link } from 'react-router-dom'
 import swal from 'sweetalert'
 
-const URL_API = 'http://localhost:9000/'
+const URL_API = 'http://localhost:7000/'
 
 class Login extends React.Component {
     state = {
@@ -12,6 +12,7 @@ class Login extends React.Component {
         inputUsernameRegister: '',
         inputPasswordRegister: '',
         inputPasswordRepeat: '',
+        inputEmailRegister:'',
         username: '',
         errMsg: '',
         isLoginPage: true
@@ -39,14 +40,15 @@ class Login extends React.Component {
     }
 
     onBtnRegister = () => {
-        let {password, username, repeatPassword} = this.refs
-        if(!password.value || !username.value || !repeatPassword.value){
+        let {password, username, repeatPassword, email} = this.refs
+        if(!password.value || !username.value || !repeatPassword.value || !email.value){
             swal('Invalid', 'Please fill all input forms', 'error')
         }else{
             if(password.value === repeatPassword.value){
                 Axios.post(URL_API+'auth/register',{
                     username:username.value,
-                    password:password.value
+                    password:password.value,
+                    email:email.value,
                 }).then((res)=>{
                     if (res.data.status=='201'){
                         swal ('Registered!', res.data.message, 'success')
@@ -107,6 +109,11 @@ class Login extends React.Component {
                             <div className="form-group mt-3 row">
                                 <div className="col-sm-12">
                                     <input type="text" onChange={e => this.setState({inputUsernameRegister: e.target.value})} ref="username" className="form-control" id="inputEmail" placeholder="Username" required autoFocus/>
+                                </div>
+                            </div>
+                            <div className="form-group mt-3 row">
+                                <div className="col-sm-12">
+                                    <input type="text" onChange={e => this.setState({inputEmailRegister: e.target.value})} ref="email" className="form-control" id="inputEmail" placeholder="Email" required autoFocus/>
                                 </div>
                             </div>
                             <div className="form-group row">
