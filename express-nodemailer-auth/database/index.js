@@ -9,7 +9,7 @@ const mysql=require('mysql')
 const db = mysql.createConnection({
     user:'root',
     password:'password',
-    database:'authentication_test',
+    database:'bukatoko',
     host:'localhost'
 })
 

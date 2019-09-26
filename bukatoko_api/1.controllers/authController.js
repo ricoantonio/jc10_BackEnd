@@ -1,4 +1,13 @@
 const db =require('../database')
+var nodemailer=require('nodemailer')
+
+let transporter=nodemailer.createTransport({
+    service: 'gmail',
+    auth:{
+        user: 'testmailpurwadhika@gmail.com',
+        pass: 'jcwwoezebsgvhwfe'
+    }
+})
 
 module.exports={
     login:(req,res)=>{
@@ -28,20 +37,6 @@ module.exports={
                 }
         })
     },
-    // login:(req,res)=>{
-    //     db.query(`select * from users where username = '${req.query.username}' and password='${req.query.password}'`, 
-    //         (err,result)=>{
-    //         if (err) throw err
-    //         res.send(result)
-    //     })
-    // // },
-    // checkUser:(req,res)=>{
-    //     db.query(`select * from users where username = '${req.query.username}'`, 
-    //         (err,result)=>{
-    //         if (err) throw err
-    //         res.send(result)
-    //     })
-    // }
     register:(req,res)=>{
         let sql= `select * from users where username='${req.body.username}'`
         let sql2=`insert into users value (0, '${req.body.username}', '${req.body.password}','${req.body.email}', 0 )`
@@ -63,8 +58,5 @@ module.exports={
                 })
             }
         })  
-    
-    
-    
     }
 }

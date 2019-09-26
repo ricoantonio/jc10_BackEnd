@@ -52,6 +52,7 @@ class Login extends React.Component {
                 }).then((res)=>{
                     if (res.data.status=='201'){
                         swal ('Registered!', res.data.message, 'success')
+                        
                     }else if (res.data.status=='400'){
                         swal ('Invalid!', res.data.message, 'error')
                     }
