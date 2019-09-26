@@ -38,7 +38,7 @@ module.exports={
         })
     },
     register:(req,res)=>{
-        let sql= `select * from users where username='${req.body.username}'`
+        let sql= `select * from users where username='${req.body.username}' or email=${req.body.email}`
         let sql2=`insert into users value (0, '${req.body.username}', '${req.body.password}','${req.body.email}', 'free' ,0)`
         
         db.query(sql,(err,result)=>{
@@ -67,5 +67,14 @@ module.exports={
                 })
             }
         })  
+    },
+    verify:(req,res)=>{
+        let username=req.query.username
+        let sql= `update users set verified = 1 where username='${username}' `
+        
+        db.query(sql,(err,result)=>{
+            if (err) throw err
+            res.send('Akun anda berhasil diverifikasi') 
+        })
     }
 }
