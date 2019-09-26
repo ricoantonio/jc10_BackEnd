@@ -1,7 +1,11 @@
 <html>
     <body>
         <center>
-            <h1>Hello World!</h1>
+            <h1>Hello {{username}}!</h1>
+            <h1>Hari ini tanggal {{today}}</h1>
+            {{#each data}}
+            <h2>{{this}} </h2>
+            {{/each}}
         </center>
     </body>
 </html>

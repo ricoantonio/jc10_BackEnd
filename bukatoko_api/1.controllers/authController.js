@@ -69,6 +69,7 @@ module.exports={
             }
         })  
     },
+
     verify:(req,res)=>{
         let username=req.query.username
         let sql= `update users set verified = 1 where username='${username}' `
@@ -78,6 +79,7 @@ module.exports={
             res.send('Akun anda berhasil diverifikasi') 
         })
     },
+
     testEmail:(req,res)=>{
         let options={
             format:'A4',
@@ -85,9 +87,22 @@ module.exports={
             border:{
                 top:'0.5in',
                 right:'0.15in',
-                left:'0.15in',
+                left:'0.15in', 
                 bottom:'0.25in'
             }
         }
+
+        var d=new Date()
+
+        let replacements={
+            username:req.query.username,
+            today:`${d.getDate()}-${d.getMonth()+1}`,
+            data:['Wahai','Kalian','Kaum','JOMBLO']
+        }
+
+        pdfcreate('./4.pdfTemplates/firstTemplate.html',replacements,options,(stream)=>{
+            res.attachment('testingPDF.pdf')
+            stream.pipe(res)
+        })
     }
 }

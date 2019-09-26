@@ -3,7 +3,7 @@ const handlebars=require('handlebars')
 const pdf=require('html-pdf')
 
 module.exports={
-    pdfcreate:(html,replacements,options,cd)=>{
+    pdfcreate:(html,replacements,options,cb)=>{
         fs.readFile(html,{encoding: 'utf-8'},(err,readHTML)=>{
             if (err){
                 console.log(err);
