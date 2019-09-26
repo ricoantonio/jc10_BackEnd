@@ -1,5 +1,6 @@
 const db =require('../database')
 var nodemailer=require('nodemailer')
+var {pdfcreate} = require('../3.helpers/html-pdf')
 
 let transporter=nodemailer.createTransport({
     service: 'gmail',
@@ -76,5 +77,17 @@ module.exports={
             if (err) throw err
             res.send('Akun anda berhasil diverifikasi') 
         })
+    },
+    testEmail:(req,res)=>{
+        let options={
+            format:'A4',
+            orientation:'landscape',
+            border:{
+                top:'0.5in',
+                right:'0.15in',
+                left:'0.15in',
+                bottom:'0.25in'
+            }
+        }
     }
 }
