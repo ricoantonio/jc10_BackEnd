@@ -1,6 +1,7 @@
 const db =require('../database')
 var nodemailer=require('nodemailer')
 var {pdfcreate} = require('../3.helpers/html-pdf')
+const fs=require('fs')
 
 let transporter=nodemailer.createTransport({
     service: 'gmail',
