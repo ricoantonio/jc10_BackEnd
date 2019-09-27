@@ -103,6 +103,21 @@ module.exports={
         pdfcreate('./4.pdfTemplates/firstTemplate.html',replacements,options,(stream)=>{
             res.attachment('testingPDF.pdf')
             stream.pipe(res)
+            //.pipe buat langsung download
+            console.log(stream)
+            transporter.sendMail({
+                from:'Purwadhika',
+                to:'ricoantonio33@hotmail.com',
+                subject:'Test attachment',
+                html:'<h1>This is an attachment</h1>',
+                attachments:[
+                    {
+                        filename:`${req.query.username}-${d.getDate()}-${d.getMonth()+1}.pdf`,
+                        content:fs.createReadStream(stream.path)
+                    }
+                ]
+            })
+            
         })
     }
 }
