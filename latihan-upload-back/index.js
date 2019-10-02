@@ -45,8 +45,14 @@ let upload = multer({
 
 // di postman ambil dari body form data key filetype jadi file
 app.post('/uploadimage', upload.single('aneh'), (req,res)=>{
-    // console.log(req)
-    res.send('Success')
+    console.log(req)
+    let data=JSON.parse(req.body.data)
+    db.query(`insert into data values (0,'${data.name}','${req.file.path.replace('uploads','files/')}', ${data.price})`, (err,result)=>{
+        if (err) throw err
+        res.send('Success')
+    
+        
+    })
 })
 
 app.get('/getdata',(req,res)=>{
@@ -56,11 +62,5 @@ app.get('/getdata',(req,res)=>{
     })
 })
 
-app.post('/adddata',(req,res)=>{
-    db.query(`insert into data values (0,'${req.body.name}','${req.body.img}')`, (err,result)=>{
-        if (err) throw err
-        res.send(result)
-    })
-})
 
 app.listen(port,console.log(`listening in port ${port}`))
