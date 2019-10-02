@@ -46,6 +46,17 @@ export class App extends Component {
 
     axios.post('http://localhost:9500/uploadimage', fd)
     .then((res)=>{
+      axios.post(urlApi+'/adddata',{
+        name:`${this.state.fileName}`,
+        img:``
+      }).then((res)=>{
+        this.getDataApi()
+        console.log(res);
+        
+      }).catch((err)=>{
+        console.log(err);
+        alert('Cannot Add Data')
+      })
       console.log(res);
       
     }).catch((err)=>{
@@ -53,19 +64,8 @@ export class App extends Component {
       
     })
 
-
-    axios.post(urlApi+'/adddata',{
-      name:`${this.state.fileName}`,
-      img:`${this.state.inputFile.name}`
-    }).then((res)=>{
-          this.getDataApi()
-          console.log(res);
-          
-        }).catch((err)=>{
-          console.log(err);
-          alert('Cannot Add Data')
-        })
   }
+
 
 
   render() {
@@ -74,7 +74,7 @@ export class App extends Component {
           <table className="table centered">
             <thead>
               <tr className="center-align">
-                <th style={{width:"10%"}}>ID</th>
+                <th style={{width:"10%"}}>No.</th>
                 <th style={{width:"30"}}>Name</th>
                 <th style={{width:"50%"}}>File</th>
               </tr>

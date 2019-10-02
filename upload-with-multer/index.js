@@ -15,7 +15,7 @@ let multerStorageConfig = multer.diskStorage({
         cb(null, './uploads')
     },
     filename:(req,file,cb)=>{
-        cb(null, `PRD-${Date.now()}.${file.mimetype.split('/')[0]}`)
+        cb(null, `PRD-${Date.now()}.${file.mimetype.split('/')[1]}`)
     }
 })
 
