@@ -5,7 +5,7 @@ var cors=require('cors')
 var bodyParser = require('body-parser')
 var multer=require('multer')
 var mysql=require('mysql')
-
+const fs =require('fs')
 
 const db = mysql.createConnection({
     user:'root',
@@ -46,13 +46,20 @@ let upload = multer({
 // di postman ambil dari body form data key filetype jadi file
 app.post('/uploadimage', upload.single('aneh'), (req,res)=>{
     console.log(req)
-    let data=JSON.parse(req.body.data)
-    db.query(`insert into data values (0,'${data.name}','${req.file.path.replace('uploads','files/')}', ${data.price})`, (err,result)=>{
-        if (err) throw err
-        res.send('Success')
-    
+
+    try {
+        if(req.validation) throw req.validation
+        if(req.file.size>5) throw {error:true,msg:'Image size to lloage'}
+        let data=JSON.parse(req.body.data)
+        db.query(`insert into data values (0,'${data.name}','${req.file.path.replace('uploads','files/')}', ${data.price})`, (err,result)=>{
+            if (err) throw err
+            res.send('Success')
+        })
+    } catch (error) {
+        fs.unlinkSync(req.file.path)
+        console.log(error)
+    }
         
-    })
 })
 
 app.get('/getdata',(req,res)=>{
