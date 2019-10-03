@@ -31,10 +31,10 @@ export class filterBE extends Component {
               <tr>
                 <td style={{paddingTop:0,paddingBottom:0}}>{index+1}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.PassengerId}</td>
-                <td style={{paddingTop:0,paddingBottom:0}}>{val.Survived}</td>
-                <td style={{paddingTop:0,paddingBottom:0}}>{val.Pclass}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Survived ? 'Alive' : 'Deceased'}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Pclass == 1 ? 'Executive': val.Pclass == 2 ? 'Business' : 'Executive'}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Name}</td>
-                <td style={{paddingTop:0,paddingBottom:0}}>{val.Sex}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Sex == 'male' ? 'M' : 'F'}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Age}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.SibSp}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Parch}</td>
