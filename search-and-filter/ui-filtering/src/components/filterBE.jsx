@@ -10,7 +10,11 @@ const urlApi = 'http://localhost:8080'
 export class filterBE extends Component {
 
     state={
-        data:[]
+        data:[],
+        selectSex:0,
+        selectClass:0,
+        selectSurvived:0,
+        inputName:'',
     }
 
     componentDidMount() {
@@ -34,7 +38,7 @@ export class filterBE extends Component {
                 <td style={{paddingTop:0,paddingBottom:0}}>{index+1}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.PassengerId}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Survived ? 'Alive' : 'Deceased'}</td>
-                <td style={{paddingTop:0,paddingBottom:0}}>{val.Pclass == 1 ? 'Executive': val.Pclass == 2 ? 'Business' : 'Executive'}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Pclass == 1 ? 'Executive': val.Pclass == 2 ? 'Business' : 'Economy'}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Name}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Sex == 'male' ? 'M' : 'F'}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Age}</td>
@@ -50,47 +54,59 @@ export class filterBE extends Component {
         return list
     }
 
+    onSelectClass=(x)=>{
+        this.setState({selectClass:x})
+    }
+    onSelectSex=(x)=>{
+        this.setState({selectSex:x})
+    }
+    onSelectSurvived=(x)=>{
+        this.setState({selectSurvived:x})
+    }
+
+
+
     render() {
         return (
             <div className="container">
                 <h5>Filter</h5>
                 <div>
-                    <input className="inline" type="text" placeholder='Name' style={{width:"50%"}}/>
+                    <input onChange={e=>this.setState({inputName:e.target.value})} className="inline" type="text" placeholder='Name' style={{width:"50%"}}/>
                     <input className="inline" type="text" placeholder='Min-Age' style={{width:"10%", marginLeft:"4%"}}/>  - <input className="inline" type="text" placeholder='Max-Age' style={{width:"10%",marginLeft:"1%"}}/>
                     <FormControl variant="outlined" style={{width:"19%", marginLeft:'4%'}}>
                         <Select
-                        onChange={val=>this.onSelectChange(val.target.value)} 
-                        value={this.state.selectInput}
+                        onChange={val=>this.onSelectSex(val.target.value)} 
+                        value={this.state.selectSex}
                         >
-                        <MenuItem value={2}>All</MenuItem>
-                        <MenuItem value={1}>Done</MenuItem>
-                        <MenuItem value={0}>Pending</MenuItem>
+                            <MenuItem value={0}>All Gender</MenuItem>
+                            <MenuItem value={1}>Male</MenuItem>
+                            <MenuItem value={2}>Female</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
                 <div>
-                <FormControl variant="outlined" style={{width:"30%"}}>
-                    <Select
-                    onChange={val=>this.onSelectChange(val.target.value)} 
-                    value={this.state.selectInput}
-                    >
-                      <MenuItem value={2}>All</MenuItem>
-                      <MenuItem value={1}>Done</MenuItem>
-                      <MenuItem value={0}>Pending</MenuItem>
-                    </Select>
-                </FormControl>
-                <FormControl variant="outlined" style={{width:"30%", marginLeft:"5%"}}>
-                    <Select
-                    onChange={val=>this.onSelectChange(val.target.value)} 
-                    value={this.state.selectInput}
-                    >
-                      <MenuItem value={2}>All</MenuItem>
-                      <MenuItem value={1}>Done</MenuItem>
-                      <MenuItem value={0}>Pending</MenuItem>
-                    </Select>
-                </FormControl>
-                <button className="btn" style={{marginLeft:"5%",width:"30%",marginTop:"1%"}}>SEARCH</button>
-                
+                    <FormControl variant="outlined" style={{width:"30%"}}>
+                        <Select
+                        onChange={val=>this.onSelectClass(val.target.value)} 
+                        value={this.state.selectClass}
+                        >
+                            <MenuItem value={0}>All Class</MenuItem>
+                            <MenuItem value={1}>Executive</MenuItem>
+                            <MenuItem value={2}>Business</MenuItem>
+                            <MenuItem value={3}>Economy</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <FormControl variant="outlined" style={{width:"30%", marginLeft:"5%"}}>
+                        <Select
+                        onChange={val=>this.onSelectSurvived(val.target.value)} 
+                        value={this.state.selectSurvived}
+                        >
+                            <MenuItem value={0}>All Status</MenuItem>
+                            <MenuItem value={1}>Alive</MenuItem>
+                            <MenuItem value={2}>Deceased</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <button className="btn blue" style={{marginLeft:"5%",width:"30%",marginTop:"1%"}}>SEARCH</button>
                 </div>
 
                 <table className="centered striped"  style={{fontSize:10}}>
