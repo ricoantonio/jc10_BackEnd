@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
 
 const urlApi = 'http://localhost:8080'
 
@@ -41,7 +43,7 @@ export class filterBE extends Component {
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Ticket}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Fare}</td>
                 <td style={{paddingTop:0,paddingBottom:0}}>{val.Cabin}</td>
-                <td style={{paddingTop:0,paddingBottom:0}}>{val.Embarked}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Embarked}</td>3
               </tr>
             )
           })
@@ -51,6 +53,46 @@ export class filterBE extends Component {
     render() {
         return (
             <div className="container">
+                <h5>Filter</h5>
+                <div>
+                    <input className="inline" type="text" placeholder='Name' style={{width:"50%"}}/>
+                    <input className="inline" type="text" placeholder='Min-Age' style={{width:"10%", marginLeft:"4%"}}/>  - <input className="inline" type="text" placeholder='Max-Age' style={{width:"10%",marginLeft:"1%"}}/>
+                    <FormControl variant="outlined" style={{width:"19%", marginLeft:'4%'}}>
+                        <Select
+                        onChange={val=>this.onSelectChange(val.target.value)} 
+                        value={this.state.selectInput}
+                        >
+                        <MenuItem value={2}>All</MenuItem>
+                        <MenuItem value={1}>Done</MenuItem>
+                        <MenuItem value={0}>Pending</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
+                <div>
+                <FormControl variant="outlined" style={{width:"30%"}}>
+                    <Select
+                    onChange={val=>this.onSelectChange(val.target.value)} 
+                    value={this.state.selectInput}
+                    >
+                      <MenuItem value={2}>All</MenuItem>
+                      <MenuItem value={1}>Done</MenuItem>
+                      <MenuItem value={0}>Pending</MenuItem>
+                    </Select>
+                </FormControl>
+                <FormControl variant="outlined" style={{width:"30%", marginLeft:"5%"}}>
+                    <Select
+                    onChange={val=>this.onSelectChange(val.target.value)} 
+                    value={this.state.selectInput}
+                    >
+                      <MenuItem value={2}>All</MenuItem>
+                      <MenuItem value={1}>Done</MenuItem>
+                      <MenuItem value={0}>Pending</MenuItem>
+                    </Select>
+                </FormControl>
+                <button className="btn" style={{marginLeft:"5%",width:"30%",marginTop:"1%"}}>SEARCH</button>
+                
+                </div>
+
                 <table className="centered striped"  style={{fontSize:10}}>
                     <thead>
                        <tr>
