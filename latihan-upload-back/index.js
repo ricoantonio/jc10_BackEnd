@@ -49,7 +49,7 @@ app.post('/uploadimage', upload.single('aneh'), (req,res)=>{
 
     try {
         if(req.validation) throw req.validation
-        if(req.file.size>5) throw {error:true,msg:'Image size to lloage'}
+        if(req.file.size>5) throw {error:true,msg:'Image size to large'}
         let data=JSON.parse(req.body.data)
         db.query(`insert into data values (0,'${data.name}','${req.file.path.replace('uploads','files/')}', ${data.price})`, (err,result)=>{
             if (err) throw err
