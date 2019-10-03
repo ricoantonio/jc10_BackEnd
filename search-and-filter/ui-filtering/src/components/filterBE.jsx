@@ -29,18 +29,19 @@ export class filterBE extends Component {
         let list=this.state.data.map((val,index)=>{
             return(
               <tr>
-                <td>{val.PassengerId}</td>
-                <td>{val.Survived}</td>
-                <td>{val.Pclass}</td>
-                <td>{val.Name}</td>
-                <td>{val.Sex}</td>
-                <td>{val.Age}</td>
-                <td>{val.SibSp}</td>
-                <td>{val.Parch}</td>
-                <td>{val.Ticket}</td>
-                <td>{val.Fare}</td>
-                <td>{val.Cabin}</td>
-                <td>{val.Embarked}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{index+1}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.PassengerId}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Survived}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Pclass}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Name}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Sex}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Age}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.SibSp}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Parch}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Ticket}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Fare}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Cabin}</td>
+                <td style={{paddingTop:0,paddingBottom:0}}>{val.Embarked}</td>
               </tr>
             )
           })
@@ -53,6 +54,7 @@ export class filterBE extends Component {
                 <table className="centered striped"  style={{fontSize:10}}>
                     <thead>
                        <tr>
+                            <th>No.</th>
                             <th>Id</th>
                             <th>Survived</th>
                             <th>Pclass</th>

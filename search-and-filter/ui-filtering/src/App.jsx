@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-import {Route, Switch, BrowserRouter, withRouter} from 'react-router-dom'
+import {Route, Switch, withRouter} from 'react-router-dom'
 import filterBE from './components/filterBE'
 
 
