@@ -2,7 +2,7 @@ var express = require('express')
 var app = express()
 var cors = require('cors')
 var bodyParser = require('body-parser')
-const port = 6060
+const port = 8080
 const mysql=require('mysql')
 
 const db = mysql.createConnection({
@@ -17,8 +17,13 @@ app.use(cors())
 
 app.get('/getdata',(req,res)=>{
     db.query(`select * from data`,(err,result)=>{
-        if (err) throw err;
-        res.send(result)
+        try {
+            if (err) throw err;
+            res.send(result)
+        } catch (error) {
+            console.log(error);
+        }
+        
     })
 })
 

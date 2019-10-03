@@ -7,13 +7,11 @@ import filterBE from './components/filterBE'
 export class App extends Component {
   render() {
     return (
-      <BrowserRouter>
         <Switch>
           <Route component={filterBE} path='/' exact />
         </Switch>
-      </BrowserRouter>
     )
   }
 }
 
-export default App
+export default withRouter(App) 
