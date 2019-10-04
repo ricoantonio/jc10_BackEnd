@@ -3,6 +3,7 @@ import axios from 'axios'
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import querystring from 'querystring'
 
 const urlApi = 'http://localhost:8080'
 
@@ -11,14 +12,18 @@ export class filterBE extends Component {
 
     state={
         data:[],
-        selectSex:0,
-        selectClass:0,
-        selectSurvived:0,
-        inputName:'',
+        name:'',
+        agemin:null,
+        agemax:null,
+        pclass:0,
+        gender:'All',
+        survived:2,
+        pClassOpt:[]
     }
 
     componentDidMount() {
         this.getDataApi()
+        this.getDataPClass()
     }
       
     getDataApi=()=>{
@@ -30,6 +35,94 @@ export class filterBE extends Component {
         alert('System Error')
         })
     }
+
+    getDataPClass=()=>{
+        axios.get(urlApi+'/getpclass')
+        .then((res)=>{
+            this.setState({pClassOpt:res.data})
+        }).catch((err)=>{
+            console.log(err);
+            alert('System Error')
+        })
+    }
+
+    renderPClass=()=>{
+        let list=this.state.pClassOpt.map(val=>{
+            return(
+                <MenuItem value={val.pclass}>{val.pclass}</MenuItem>
+            )
+        })
+        return list
+    }
+
+    onBtnSearch=()=>{
+        let filterData={}
+        let {name,agemax,agemin,gender,survived,pclass} = this.state
+        
+
+        if(name){
+            filterData={...filterData,name}
+        }
+        if(agemax&&agemin){
+            filterData={...filterData,agemin,agemax}
+
+        }
+        if(gender=='Male' || gender =='Female'){
+            filterData={...filterData,gender}
+
+        }
+        if(survived<2){
+            filterData={...filterData,survived}
+
+        }
+        if(pclass!=0){
+            filterData={...filterData,pclass}
+
+        }
+
+        this.pushUrl()
+
+        axios.get(urlApi+'/getdata',{
+            params: filterData
+
+        })
+            .then((res)=>{
+                this.setState({data:res.data})
+            }).catch((err)=>{
+                console.log(err);
+                alert('System Error')
+        })
+    }
+
+    
+    pushUrl=()=>{
+        let filterData={}
+        let {name,agemax,agemin,gender,survived,pclass} = this.state
+        
+
+        if(name){
+            filterData={...filterData,name}
+        }
+        if(agemax&&agemin){
+            filterData={...filterData,agemin,agemax}
+
+        }
+        if(gender=='Male' || gender =='Female'){
+            filterData={...filterData,gender}
+
+        }
+        if(survived<2){
+            filterData={...filterData,survived}
+
+        }
+        if(pclass!=0){
+            filterData={...filterData,pclass}
+
+        }
+
+        this.props.history.push(`/search?`+querystring.stringify(filterData))
+    }
+
 
     renderData=()=>{
         let list=this.state.data.map((val,index)=>{
@@ -55,32 +148,32 @@ export class filterBE extends Component {
     }
 
     onSelectClass=(x)=>{
-        this.setState({selectClass:x})
+        this.setState({pclass:x})
     }
     onSelectSex=(x)=>{
-        this.setState({selectSex:x})
+        this.setState({gender:x})
     }
     onSelectSurvived=(x)=>{
-        this.setState({selectSurvived:x})
+        this.setState({survived:x})
     }
-
-
+    
 
     render() {
         return (
             <div className="container">
                 <h5>Filter</h5>
                 <div>
-                    <input onChange={e=>this.setState({inputName:e.target.value})} className="inline" type="text" placeholder='Name' style={{width:"50%"}}/>
-                    <input className="inline" type="text" placeholder='Min-Age' style={{width:"10%", marginLeft:"4%"}}/>  - <input className="inline" type="text" placeholder='Max-Age' style={{width:"10%",marginLeft:"1%"}}/>
+                    <input onChange={e=>this.setState({name:e.target.value})} className="inline" type="text" placeholder='Name' style={{width:"50%"}}/>
+                    <input  onChange={a=>this.setState({agemin:a.target.value})}  className="inline" type="number" placeholder='Min-Age' style={{width:"10%", marginLeft:"3%",marginRight:'1%'}}/>  - 
+                    <input  onChange={a=>this.setState({agemax:a.target.value})}  className="inline" type="number" placeholder='Max-Age' style={{width:"10%",marginLeft:"1%"}}/>
                     <FormControl variant="outlined" style={{width:"19%", marginLeft:'4%'}}>
                         <Select
                         onChange={val=>this.onSelectSex(val.target.value)} 
-                        value={this.state.selectSex}
+                        value={this.state.gender}
                         >
-                            <MenuItem value={0}>All Gender</MenuItem>
-                            <MenuItem value={1}>Male</MenuItem>
-                            <MenuItem value={2}>Female</MenuItem>
+                            <MenuItem value={'All'}>All Gender</MenuItem>
+                            <MenuItem value={'Male'}>Male</MenuItem>
+                            <MenuItem value={'Female'}>Female</MenuItem>
                         </Select>
                     </FormControl>
                 </div>
@@ -88,27 +181,25 @@ export class filterBE extends Component {
                     <FormControl variant="outlined" style={{width:"30%"}}>
                         <Select
                         onChange={val=>this.onSelectClass(val.target.value)} 
-                        value={this.state.selectClass}
+                        value={this.state.pclass}
                         >
                             <MenuItem value={0}>All Class</MenuItem>
-                            <MenuItem value={1}>Executive</MenuItem>
-                            <MenuItem value={2}>Business</MenuItem>
-                            <MenuItem value={3}>Economy</MenuItem>
+                            {this.renderPClass()}
                         </Select>
                     </FormControl>
                     <FormControl variant="outlined" style={{width:"30%", marginLeft:"5%"}}>
                         <Select
                         onChange={val=>this.onSelectSurvived(val.target.value)} 
-                        value={this.state.selectSurvived}
+                        value={this.state.survived}
                         >
-                            <MenuItem value={0}>All Status</MenuItem>
+                            <MenuItem value={2}>All Status</MenuItem>
                             <MenuItem value={1}>Alive</MenuItem>
-                            <MenuItem value={2}>Deceased</MenuItem>
+                            <MenuItem value={0}>Deceased</MenuItem>
                         </Select>
                     </FormControl>
-                    <button className="btn blue" style={{marginLeft:"5%",width:"30%",marginTop:"1%"}}>SEARCH</button>
+                    <button onClick={this.onBtnSearch}  className="btn blue" style={{marginLeft:"5%",width:"30%",marginTop:"1%"}}>SEARCH</button>
                 </div>
-
+                    <hr/>
                 <table className="centered striped"  style={{fontSize:10}}>
                     <thead>
                        <tr>
