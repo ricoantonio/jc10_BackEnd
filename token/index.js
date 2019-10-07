@@ -17,6 +17,7 @@ app.get("/",(req,res)=>{
 })
 
 const auth= (req,res,next)=>{
+    // buat cek kalo user boleh akses api ato nga
     if(req.method !== "OPTIONS" ){
         //let success = true
         console.log(req.headers.authorization);
@@ -44,7 +45,7 @@ const auth= (req,res,next)=>{
 }
 
 app.get(
-    'verifytoken',
+    '/verifytoken',
     (req,res,next)=>{
         if(req.method !== "OPTIONS" ){
             //let success = true
@@ -66,7 +67,7 @@ app.get(
         res.send('User authorized')
 })
 
-app.post('/gettoken', auth, (req,res)=>{
+app.post('/gettoken', (req,res)=>{
     let {username,email}=req.body
     let token = jwt.sign({username, email}, appKey, {expiresIn:'12h'})
     console.log(token)
