@@ -27,13 +27,26 @@ export class filterBE extends Component {
     }
       
     getDataApi=()=>{
-        axios.get(urlApi+'/getdata')
+
+        let filterObj ={}
+
+        if(this.props.location.search){
+            console.log(this.props.location.search);
+            filterObj = querystring.parse(this.props.location.search.slice(1))
+        }
+
+        console.log(filterObj);
+        
+        axios.get(urlApi+'/getdata',{
+            params:filterObj
+        })
         .then((res)=>{
         this.setState({data:res.data})
         }).catch((err)=>{
         console.log(err);
         alert('System Error')
         })
+        
     }
 
     getDataPClass=()=>{
@@ -58,7 +71,10 @@ export class filterBE extends Component {
     onBtnSearch=()=>{
         let filterData={}
         let {name,agemax,agemin,gender,survived,pclass} = this.state
-        
+        // this.props.history.push(`/jc10?name=${name}&gender=${gender}`)
+        // let feParams = querystring.parse(this.props.location.search)
+        // console.log(feParams)
+
 
         if(name){
             filterData={...filterData,name}
@@ -121,6 +137,9 @@ export class filterBE extends Component {
         }
 
         this.props.history.push(`/search?`+querystring.stringify(filterData))
+        let feParams = querystring.parse(this.props.location.search)
+        console.log(feParams);
+        
     }
 
 
