@@ -1,0 +1,3 @@
+cd C:\Program Files\MongoDB\Server\4.2\bin
+mongod --dbpath "C:\Users\Rico\Desktop\JC 10 Back-End\MongoDB\db"
+mongod

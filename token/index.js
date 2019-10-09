@@ -69,6 +69,7 @@ app.get(
 
 app.post('/gettoken', (req,res)=>{
     let {username,email}=req.body
+    // kalo ad id di dalam decoded akan terdapat id
     let token = jwt.sign({username, email}, appKey, {expiresIn:'12h'})
     console.log(token)
 
