@@ -2,21 +2,30 @@ var express = require('express')
 var app = express()
 var cors = require('cors')
 var bodyParser = require('body-parser')
-const port = 8080
+const port = process.env.PORT || 8088
 const mysql=require('mysql')
 
+// untuk hosting di heroku
+//npm i -g heroku
+
+// const db = mysql.createConnection({
+//     user:'root',
+//     password:'password',
+//     database:'titanic_jc10',
+//     host:'localhost'
+// })
 const db = mysql.createConnection({
-    user:'root',
-    password:'password',
-    database:'titanic_jc10',
-    host:'localhost'
+    user:'ricoantonio',
+    password:'sansan33',
+    host:'db4free.net',
+    database:'ricoantoniodata'
 })
 
 app.use(bodyParser.json())
 app.use(cors())
 
 app.get('/getdata',(req,res)=>{
-    let sql=`select * from data`
+    let sql=`select * from train`
     let {query}=req
     if(query){
         sql+=` where`
@@ -52,7 +61,7 @@ app.get('/getdata',(req,res)=>{
 
 
 app.get('/getpclass',(req,res)=>{
-    db.query(`select pclass from data group by pclass`,(err,result)=>{
+    db.query(`select pclass from train group by pclass`,(err,result)=>{
         try {
             if(err) throw err
             res.send(result)
