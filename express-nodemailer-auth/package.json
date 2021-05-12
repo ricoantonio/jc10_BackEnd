@@ -12,7 +12,7 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mysql": "github:mysqljs/mysql",
-    "nodemailer": "^4.7.0"
+    "nodemailer": "^6.4.16"
   },
   "devDependencies": {},
   "description": ""
